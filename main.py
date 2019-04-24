@@ -1,59 +1,35 @@
+# Importing Library
 import numpy as np
-
-# Plotting Library sa
 import matplotlib.pyplot as plt
-
 from scipy import misc
 from skimage import data
 from skimage.io import imread
 from skimage.color import rgb2gray
 from skimage import filters
-
-# FUNÇÕES MORFOLOGICAS
 from skimage import morphology
 from skimage.morphology import square, rectangle, disk
-disease_name = 'patient.jpg'
-folha_color = imread(file_name)
-disease = rgb2gray(imread('patient.jpg'))
+from skimage.filters import threshold_otsu
 
-# Exibe imagens
-fig = plt.figure(figsize=(20,20))
-a = fig.add_subplot(1,4,1)
-plt.imshow(disease, cmap=plt.cm.gray)
-a.set_title('Original')
-plt.axis('off')
+# Importing Image
+file_name = 'mea2-H2.jpg'
+image = rgb2gray(imread(file_name))
 
-open_3  = morphology.opening(disease, disk(3))
-open_15 = morphology.opening(disease, disk(15))
-open_30 = morphology.opening(disease, disk(30))
-difference = open_15 - disease
+open = morphology.opening(image, disk(15))
+difference = open - image
 global_thresh = threshold_otsu(difference)
 difference = difference > global_thresh
 
+# Plot Image
+fig = plt.figure(figsize=(100, 100))
 
-# Exibe imagens
-fig = plt.figure(figsize=(100,100))
-a = fig.add_subplot(1,4,1)
-plt.imshow(disease, cmap=plt.cm.gray)
+a = fig.add_subplot(1, 2, 1)
+plt.imshow(image, cmap=plt.cm.gray)
 a.set_title('Original')
+plt.axis('off') 
+
+a = fig.add_subplot(1, 2, 2)
+plt.imshow(open, cmap=plt.cm.gray)
+a.set_title('Abert')
 plt.axis('off')
 
-a = fig.add_subplot(1,4,2)
-plt.imshow(open_3, cmap=plt.cm.gray)
-a.set_title('Abert (3)')
-plt.axis('off')
-
-a = fig.add_subplot(1,4,3)
-plt.imshow(open_15, cmap=plt.cm.gray)
-a.set_title('Abert (15)')
-plt.axis('off')
-
-a = fig.add_subplot(1,4,3)
-plt.imshow(difference, cmap=plt.cm.gray)
-a.set_title('Abert (15)')
-plt.axis('off')
-
-plt.tight_layout()
 plt.show()
-
-# Minha alteração
