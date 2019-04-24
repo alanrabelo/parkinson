@@ -25,7 +25,7 @@ fig = plt.figure(figsize=(100, 100))
 a = fig.add_subplot(1, 2, 1)
 plt.imshow(image, cmap=plt.cm.gray)
 a.set_title('Original')
-plt.axis('off') 
+plt.axis('off')
 
 a = fig.add_subplot(1, 2, 2)
 plt.imshow(open, cmap=plt.cm.gray)
@@ -33,3 +33,6 @@ a.set_title('Abert')
 plt.axis('off')
 
 plt.show()
+
+
+#
